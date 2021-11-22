@@ -6,18 +6,18 @@ class UserLocation {
   double latitude;
   double longitude;
   final FileManager _checkerData = FileManager();
-  late String _checker;
-  late Station _state;
+  late String checker;
+  late Station state;
 
   UserLocation({required this.longitude, required this.latitude});
 
   void setChecker(List<Station> stations) {
     _checkerData.readChecker().then((value) {
-      _checker = value;
-      if (_checker.isNotEmpty) {
+      checker = value;
+      if (checker.isNotEmpty) {
         for (var element in stations) {
-          if (_checker == element.name) {
-            _state = element;
+          if (checker == element.name) {
+            state = element;
             break;
           }
         }
@@ -26,30 +26,30 @@ class UserLocation {
   }
 
   void _updateChecker(String station) {
-    _checker = station;
-    _checkerData.writeChecker(_checker);
+    checker = station;
+    _checkerData.writeChecker(checker);
   }
 
   void _updateState(Station station) {
-    _state = station;
-    _state.reference.update({'users': _state.users + 1});
+    state = station;
+    state.reference.update({'users': state.users + 1});
   }
 
   void checkPosition(List<Station> stations) {
     for (var element in stations) {
       element.distance = haversineEquation(element.location.longitude, element.location.latitude, longitude, latitude);
       if (element.distance <= 500) {
-        if (_checker.isEmpty) {
+        if (checker.isEmpty) {
           _updateState(element);
           _updateChecker(element.name);
-        } else if (_checker != element.name) {
-          _state.reference.update({'users': _state.users - 1});
+        } else if (checker != element.name) {
+          state.reference.update({'users': state.users - 1});
           _updateState(element);
           _updateChecker(element.name);
         }
       } else {
-        if (_checker == element.name) {
-          _state.reference.update({'users': _state.users - 1});
+        if (checker == element.name) {
+          state.reference.update({'users': state.users - 1});
           _updateChecker('');
         }
       }

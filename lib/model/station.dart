@@ -6,6 +6,7 @@ class Station {
   late Map<String, dynamic> lines;
   late GeoPoint location;
   late String name;
+  late String group;
   late String description;
   late String image;
   late int users;
@@ -19,6 +20,7 @@ class Station {
     lines = map['lines'];
     location = map['location'];
     name = map['name'];
+    group = map['group'];
     description = map['description'];
     image = map['image'];
     users = map['users'];
