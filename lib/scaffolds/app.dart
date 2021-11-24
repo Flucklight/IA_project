@@ -51,7 +51,6 @@ class _AppState extends State<App> {
           _userLocation.longitude = snapshot.data!.longitude;
           _userLocation.latitude = snapshot.data!.latitude;
           _userLocation.checkPosition(_stations);
-          _stations.sort((a, b) => a.distance.compareTo(b.distance));
           return _mainBody(context);
         } else {
           return const CupertinoActivityIndicator();
