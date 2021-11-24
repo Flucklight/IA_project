@@ -80,6 +80,6 @@ class Individual {
         memoryGroup = station.group;
       }
     }
-    grade = pow(gen.length + transshipment + population, exponent);
+    grade = pow(gen.length, exponent) + transshipment + population;
   }
 }
