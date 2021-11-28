@@ -13,7 +13,7 @@ class Individual {
       genCode(start!, end!, stations!);
     } else {
       this.gen.addAll(gen!);
-      mute(stations!);
+      mute(stations!, end!);
     }
   }
 
@@ -31,7 +31,7 @@ class Individual {
       }
       next = Random.secure().nextInt(pointer.stationsReference.length);
       ref = pointer.stationsReference.elementAt(next);
-      if (backtrack == ref) {
+      if (backtrack == ref && pointer.stationsReference.length != 1) {
         if (next == pointer.stationsReference.length - 1) {
           next--;
         } else {
@@ -52,15 +52,15 @@ class Individual {
     evaluation(cycle);
   }
 
-  void mute(List<Station> stations) {
-    Station end = gen.last;
+  void mute(List<Station> stations, Station end) {
     int muteVar = Random.secure().nextInt(gen.length);
+    Station change = gen.elementAt(muteVar);
     gen = gen.sublist(0, muteVar);
-    genCode(gen.last, end, stations);
+    genCode(change, end, stations);
   }
 
-  Individual clone(List<Station> stations) {
-    return Individual(stations: stations, clone: true, gen: gen);
+  Individual clone(List<Station> stations, Station end) {
+    return Individual(end: end,stations: stations, clone: true, gen: gen);
   }
 
   void evaluation(bool cycle) {

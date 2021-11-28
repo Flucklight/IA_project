@@ -9,10 +9,10 @@ void genPol(Station start, Station end, int popLength, List<Station> stations) {
   }
 }
 
-void crossOver(List<Station> stations) {
+void crossOver(List<Station> stations, Station end) {
   for (int i = 0; i < _population.length/2; i++) {
     _population.removeAt(_population.length - (i + 1));
-    _population.add(_population.elementAt(i).clone(stations));
+    _population.add(_population.elementAt(i).clone(stations, end));
   }
 }
 
@@ -49,7 +49,7 @@ List<Station> search(popLength, genAverage, List<Station> stations, Station dest
       }
     }
     selection();
-    crossOver(stations);
+    crossOver(stations, dest);
   }
   return _population.first.gen;
 }
